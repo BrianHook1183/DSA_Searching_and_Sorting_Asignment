@@ -24,24 +24,17 @@ function sort(compare, elements) {
 
 function merge(compare, left, right) {
     const sorted = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
 
-    while (leftIndex < left.length && rightIndex < right.length) {
-        const comparison = compare(left[leftIndex], right[rightIndex]);
+    while (left.length && right.length) {
+        const comparison = compare(left[0], right[0]);
 
-        if (comparison < 0) {
-            sorted.push(left[leftIndex]);
-            leftIndex++;
+        if (comparison <= 0) {
+            sorted.push(left.shift());
         } else {
-            sorted.push(right[rightIndex]);
-            rightIndex++;
+            sorted.push(right.shift());
         }
     }
-
-    return sorted.concat(
-        leftIndex < left.length ? left.slice(leftIndex) : right.slice(rightIndex)
-    );
+    return sorted.concat(left, right);
 }
 
 module.exports = sort;
